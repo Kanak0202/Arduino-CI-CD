@@ -27,7 +27,7 @@ pipeline {
         stage('Upload to Arduino') {
             steps {
                 bat 'echo Uploading to Arduino...'
-                bat 'arduino-cli upload -p COM3 --fqbn arduino:avr:uno --input-dir build'
+                bat 'arduino-cli upload -p COM3 --fqbn arduino:avr:uno Arduino-CI-CD-V1/Arduino-CI-CD-V1.ino'
             }
         }
     }
