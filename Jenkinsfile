@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        ARDUINO_DATA_DIR = "C:\\arduino-cli-data"  // Fix "Unable to get Documents Folder" issue
+        ARDUINO_DATA_DIR = "C:\\arduino-cli-data"
     }
     
     stages {
@@ -16,15 +16,18 @@ pipeline {
         
         stage('Compile Sketch') {
             steps {
+                bat 'echo Checking files...'
+                bat 'dir'  // Debugging step
+                
                 bat 'echo Compiling sketch...'
-                bat 'arduino-cli compile --fqbn arduino:avr:uno sketch.ino'
+                bat 'arduino-cli compile --fqbn arduino:avr:uno Arduino-CI-CD-V1/Arduino-CI-CD-V1.ino'
             }
         }
         
         stage('Upload to Arduino') {
             steps {
                 bat 'echo Uploading to Arduino...'
-                bat 'arduino-cli upload -p COM3 --fqbn arduino:avr:uno sketch.ino'
+                bat 'arduino-cli upload -p COM3 --fqbn arduino:avr:uno --input-dir build'
             }
         }
     }
