@@ -1,24 +1,24 @@
 pipeline {
     agent any
-    environment {
-        BOARD = 'arduino:avr:uno'
-        SKETCH = 'sketch.ino'
-        BUILD_DIR = './build/arduino.avr.uno'
-    }
+    
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/Kanak0202/Arduino-CI-CD.git'
-            }
-        }
         stage('Install Dependencies') {
             steps {
-                sh 'arduino-cli lib install <library-name>'  // Replace with actual libraries
+                bat 'echo Installing dependencies...'
+                bat 'arduino-cli core update-index'  // Ensure Arduino CLI is available
+                bat 'arduino-cli core install arduino:avr'
             }
         }
-        stage('Compile') {
+        
+        stage('Compile Sketch') {
             steps {
-                sh "arduino-cli compile --fqbn ${BOARD} --build-path ${BUILD_DIR} ${SKETCH}"
+                bat 'arduino-cli compile --fqbn arduino:avr:uno path/to/sketch'
+            }
+        }
+        
+        stage('Upload to Arduino') {
+            steps {
+                bat 'arduino-cli upload -p COM3 --fqbn arduino:avr:uno path/to/sketch'
             }
         }
     }
