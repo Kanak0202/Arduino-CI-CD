@@ -2,11 +2,12 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                git 'https://github.com/Kanak0202/Arduino-CI-CD.git'
-            }
+            stage('Checkout Code') {
+        steps {
+            git branch: 'main', url: 'https://github.com/Kanak0202/Arduino-CI-CD.git'
         }
+    }
+
 
         stage('Compile Sketch') {
             steps {
