@@ -1,34 +1,22 @@
 pipeline {
     agent any
 
-    environment {
-        ARDUINO_DATA_DIR = "C:\\arduino-cli-data"
-        ARDUINO_SKETCHBOOK = "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Arduino-CI-CD-V1"
-    }
-
     stages {
-        stage('Install Dependencies') {
+        stage('Checkout Code') {
             steps {
-                bat 'echo Installing dependencies...'
-                bat 'arduino-cli core update-index'
-                bat 'arduino-cli core install arduino:avr'
+                git 'https://github.com/Kanak0202/Arduino-CI-CD.git'
             }
         }
 
         stage('Compile Sketch') {
             steps {
-                bat 'echo Checking files...'
-                bat 'dir Arduino-CI-CD-V1'  // Debugging step
-                
-                bat 'echo Compiling sketch...'
-                bat 'arduino-cli compile --fqbn arduino:avr:uno ./Arduino-CI-CD-V1'
+                bat 'arduino-cli compile --fqbn arduino:avr:uno Arduino-CI-CD-V1'
             }
         }
 
-        stage('Upload to Arduino') {
+        stage('Build Successful') {
             steps {
-                bat 'echo Uploading to Arduino...'
-                bat 'arduino-cli upload -p COM3 --fqbn arduino:avr:uno ./Arduino-CI-CD-V1'
+                echo 'Build completed successfully!'
             }
         }
     }
