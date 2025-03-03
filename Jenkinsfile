@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         ARDUINO_CLI = "C:\\Users\\kanak\\AppData\\Local\\Arduino15\\arduino-cli.exe"
+        ARDUINO_DATA_PATH = "C:\\arduino-cli-data"
     }
 
     stages {
@@ -14,14 +15,15 @@ pipeline {
 
         stage('Setup Environment') {
             steps {
-                bat 'arduino-cli core update-index'
-                bat 'arduino-cli core install arduino:avr'
+                bat 'set ARDUINO_DATA_PATH=C:\\arduino-cli-data'
+                bat '"%ARDUINO_CLI%" core update-index'
+                bat '"%ARDUINO_CLI%" core install arduino:avr'
             }
         }
 
         stage('Compile Sketch') {
             steps {
-                bat 'arduino-cli compile --fqbn arduino:avr:uno ./Arduino-CI-CD-V1'
+                bat '"%ARDUINO_CLI%" compile --fqbn arduino:avr:uno .'
             }
         }
 
