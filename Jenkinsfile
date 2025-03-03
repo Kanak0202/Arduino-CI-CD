@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/YOUR_USERNAME/Arduino-CI-CD.git'
+                git branch: 'main', url: 'https://github.com/Kanak0202/Arduino-CI-CD.git'
             }
         }
         stage('Compile') {
