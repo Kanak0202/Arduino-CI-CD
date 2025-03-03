@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         ARDUINO_DATA_DIR = "C:\\arduino-cli-data"
+        ARDUINO_SKETCHBOOK = "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Arduino-CI-CD-V1"
     }
 
     stages {
@@ -14,17 +15,10 @@ pipeline {
             }
         }
 
-        stage('Set Sketchbook Path') {
-            steps {
-                bat 'echo Setting Arduino sketchbook path...'
-                bat 'arduino-cli config set sketchbook_path C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Arduino-CI-CD-V1'
-            }
-        }
-
         stage('Compile Sketch') {
             steps {
                 bat 'echo Checking files...'
-                bat 'dir Arduino-CI-CD-V1'  // Debugging step to check if the .ino file exists
+                bat 'dir Arduino-CI-CD-V1'  // Debugging step
                 
                 bat 'echo Compiling sketch...'
                 bat 'arduino-cli compile --fqbn arduino:avr:uno ./Arduino-CI-CD-V1'
